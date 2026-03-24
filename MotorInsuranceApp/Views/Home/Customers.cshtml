@@ -1,0 +1,125 @@
+﻿@model List<MotorInsuranceApp.Models.Customer>
+
+<h2 class="mb-4">Customers</h2>
+
+<button class="btn btn-primary mb-3"
+        data-bs-toggle="modal"
+        data-bs-target="#addCustomerModal">
+    + Add Customer
+</button>
+
+<div class="card-box">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Name</td>
+                    <td>@c.Email</td>
+                    <td>@c.Phone</td>
+                    <td>
+
+                        <!-- Edit -->
+                        <button class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editCustomerModal"
+                                onclick="fillCustomerEdit(@c.Id, '@c.Name', '@c.Email', '@c.Phone')">
+                            Edit
+                        </button>
+
+                        <!-- Delete-->
+                        <a asp-action="DeleteCustomer"
+                               asp-route-id="@c.Id"
+                               class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Add modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-2">
+
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Add Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form asp-action="AddCustomer" method="post">
+
+                <div class="modal-body">
+
+                    <input name="Name" class="form-control mb-3" placeholder="Enter name" />
+                    <input name="Email" class="form-control mb-3" placeholder="Enter email" />
+                    <input name="Phone" class="form-control mb-3" placeholder="Enter phone" />
+
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div class="modal fade" id="editCustomerModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-2">
+
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Edit Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form asp-action="EditCustomer" method="post">
+
+                <div class="modal-body">
+
+                    <input type="hidden" name="Id" id="editCustomerId" />
+
+                    <input name="Name" id="editCustomerName" class="form-control mb-3" />
+                    <input name="Email" id="editCustomerEmail" class="form-control mb-3" />
+                    <input name="Phone" id="editCustomerPhone" class="form-control mb-3" />
+
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    function fillCustomerEdit(id, name, email, phone) {
+        document.getElementById("editCustomerId").value = id;
+        document.getElementById("editCustomerName").value = name;
+        document.getElementById("editCustomerEmail").value = email;
+        document.getElementById("editCustomerPhone").value = phone;
+    }
+</script>

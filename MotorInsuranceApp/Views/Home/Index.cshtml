@@ -1,0 +1,59 @@
+﻿@model List<MotorInsuranceApp.Models.Policy>
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Total Cars</h6>
+            <h3>@ViewBag.TotalCars</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Total Customers</h6>
+            <h3>@ViewBag.TotalCustomers</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Total Policies</h6>
+            <h3>@ViewBag.TotalPolicies</h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="card p-3 shadow-sm">
+    <h5 class="mb-3">Recent Policies</h5>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Car</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Customer?.Name</td>
+                    <td>@p.Car?.Brand @p.Car?.Model</td>
+                    <td>@p.Price</td>
+                    <td>
+                        <span class="badge bg-@(p.Status == "Active" ? "success" : "warning")">
+                            @p.Status
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
